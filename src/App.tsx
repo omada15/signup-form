@@ -19,9 +19,10 @@ function App() {
             <div className="items-center justify-center flex flex-col">
                 <DropdownSearch
                     label="Search name"
-                    options={["dihney pluh"]}
+                    options={["dihney pluh", "cuh"]}
                     placeholder="Search..."
                     onChange={setid}
+                    value={id}
                 />
                 <div className="p-4 items-center justify-center flex flex-col">
                     <p className="pb-4">Click on textbox below to input studentid</p>
