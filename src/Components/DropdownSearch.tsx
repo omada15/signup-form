@@ -59,7 +59,7 @@ const DropdownSearch: React.FC<DropdownSearchProps> = ({
             <div style={{ display: showDropDown ? "block" : "none" }} className="bg-gray-700 p-4 border-gray-200">
                 {results.map((option) => (
                     <>
-                        <label className="text-white ">
+                        <label className="text-white hover:bg-gray-600">
                             <div onClick={() => {onChange(option)}}>
                                 {option}
                             </div>
