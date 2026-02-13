@@ -16,7 +16,6 @@ const DropdownSearch: React.FC<DropdownSearchProps> = ({
     value,
     onChange,
 }) => {
-
     const [search, setSearch] = useState<string>("");
     const [showDropDown, setShowDropDown] = useState<boolean>(false);
 
@@ -69,9 +68,9 @@ const DropdownSearch: React.FC<DropdownSearchProps> = ({
             
             {showDropDown && (
                 <div className="bg-gray-700 p-4 border-gray-200 w-60 rounded-xl mt-1 overflow-hidden">
-                    {results.length > 0 ? (
-                        results.map((option) => (
-                            <div key={option} className="pb-2">
+                    {options.length > 0 ? (
+                        options.map((option) => (
+                            <div key={option} className="mb-2 last:mb-0">
                                 <label 
                                     className="text-white cursor-pointer w-full hover:text-blue-400"
                                     onClick={() => {
