@@ -5,6 +5,7 @@ interface DropdownSearchProps {
     label?: string
     options: Array<string>
     placeholder: string
+    value: string
     onChange: (newValue: string) => void;
 }
 
@@ -12,6 +13,7 @@ const DropdownSearch: React.FC<DropdownSearchProps> = ({
     label, 
     options,
     placeholder,
+    value,
     onChange,
 }) => {
 
@@ -29,7 +31,7 @@ const DropdownSearch: React.FC<DropdownSearchProps> = ({
         if (!search) return options;
         return options
             .filter((item) => item.toLowerCase().includes(search.toLowerCase()))
-            .sort((a, b) => {
+            .sort((a) => {
                 if (a.toLowerCase().startsWith(search.toLowerCase())) return -1;
                 return 1;
             });
@@ -47,12 +49,12 @@ const DropdownSearch: React.FC<DropdownSearchProps> = ({
     };
 
     return (
-        <div className="flex flex-col items-center space-y-2">
+        <div className="flex flex-col items-center space-y-2 h-full">
             {boxLabel}
             <input
                 type="text"
                 placeholder={placeholder}
-                value={search}
+                value={value}
                 onChange={(e) => {
                     setSearch(e.target.value);
                     if (!showDropDown) setShowDropDown(true);
@@ -69,9 +71,9 @@ const DropdownSearch: React.FC<DropdownSearchProps> = ({
                 <div className="bg-gray-700 p-4 border-gray-200 w-60 rounded-xl mt-1 overflow-hidden">
                     {results.length > 0 ? (
                         results.map((option) => (
-                            <div key={option} className="mb-2 last:mb-0">
+                            <div key={option} className="pb-2">
                                 <label 
-                                    className="text-white cursor-pointer hover:text-blue-400"
+                                    className="text-white cursor-pointer w-full hover:text-blue-400"
                                     onClick={() => {
                                         onChange(option);
                                         setShowDropDown(false);
