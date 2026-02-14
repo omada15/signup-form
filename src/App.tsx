@@ -1,29 +1,38 @@
 import { useState } from "react"
 import DropdownSearch from "./Components/DropdownSearch"
+import BinaryChoice from "./Components/BinaryButton"; 
 
-function submit() {
-
-}
 function App() {
 
     const [id, setid] = useState<string>("");
     const [page, setpage] = useState(0)
 
-    const [changeid, setchangeid] = useState<string>("")
-    const [changeName, setChangeName] = useState<string>("")
+    const [diddy, setDiddy] = useState<boolean>(false)
 
     let content = null
 
+    const submit = () => {
+        
+    }
+
     if (page == 0) {
         content = (
-            <div className="items-center justify-center flex flex-col">
+            <div className="items-center justify-center flex flex-col w-1/2 flex-grow">
                 <DropdownSearch
                     label="Search name"
-                    options={["dihney pluh", "cuh"]}
+                    options={["sam rainbow", "cuh", "ding 💋💋 dong"]}
                     placeholder="Search..."
                     onChange={setid}
                     value={id}
                 />
+
+                <BinaryChoice
+                    label=""
+                    options={["Sign in","Sign out"]}
+                    value={diddy}
+                    onChange={setDiddy}
+                />
+
                 <div className="p-4 items-center justify-center flex flex-col">
                     <p className="pb-4">Click on textbox below to input studentid</p>
                     <input placeholder="studentid" className="pt-4 cursor-pointer text-white text-l pl-8 pr-8 p-4 flex-col items-start flex justify-center w-60 bg-gray-700 rounded-full focus-within:outline-auto relative"></input>
