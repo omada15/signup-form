@@ -4,6 +4,7 @@ import { read, write } from "./store"
 import DropdownSearch from "./Components/DropdownSearch"
 import BinaryChoice from "./Components/BinaryButton";
 import { log } from "./log";
+import RecordedResponse from "./Components/RecordedResponse";
 
 async function makeStudent(name: string, id: string, func: Function) {
     const array = read("students");
@@ -70,6 +71,8 @@ function App() {
     const [changeid, setChangeid] = useState<string>("")
     const [diddy, setDiddy] = useState<boolean>(true)
     const [password, setPassword] = useState<boolean>(true)
+    const [studentid, setStudentid] = useState<string>("")
+    const [floyd, setFloyd] = useState<string>("")
 
     let content = null
 
@@ -78,6 +81,16 @@ function App() {
             alert("ur name's wrong bro");
         } else {
             log("SIGN", `USER ${name} signed in with name`);
+        }
+    }
+
+    const swithstudentid = (studentid: string) => {
+        // this is added to see if the recorded response was working or not, eventually probably incorporated into the other method 
+        if (diddy) {
+            console.log(studentid + " signed in")
+        }
+        else {
+            console.log(studentid + " signed out")
         }
     }
 
@@ -124,6 +137,15 @@ function App() {
                         options={["Sign in", "Sign out"]}
                         value={diddy}
                         onChange={setDiddy}
+                    />
+
+                    <RecordedResponse
+                        label="Scan your dihprint"
+                        options={[]}
+                        placeholder="student id"
+                        value={studentid}
+                        onEnter={swithstudentid}
+                        onChange={setStudentid}
                     />
 
                     <div className="border-t border-white/10 pt-4">
