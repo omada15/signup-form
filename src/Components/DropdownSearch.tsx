@@ -5,16 +5,18 @@ interface DropdownSearchProps {
     label?: string
     options: Array<string>
     placeholder: string
+    value: string
     onChange: (newValue: string) => void;
+
 }
 
 const DropdownSearch: React.FC<DropdownSearchProps> = ({
     label, 
     options,
     placeholder,
+    value,
     onChange,
 }) => {
-
     const [search, setSearch] = useState<string>("");
     const [showDropDown, setShowDropDown] = useState<boolean>(false);
 
@@ -26,41 +28,40 @@ const DropdownSearch: React.FC<DropdownSearchProps> = ({
     }
 
     const results = useMemo(() => {
-        if (!search) return options;
+        if (!value) return options;
         return options
-            .filter((item) => item.toLowerCase().includes(search.toLowerCase()))
-            .sort((a, b) => {
-                if (a.toLowerCase().startsWith(search.toLowerCase())) return -1;
+            .filter((item) => item.toLowerCase().includes(value.toLowerCase()))
+            .sort((a) => {
+                if (a.toLowerCase().startsWith(value.toLowerCase())) return -1;
                 return 1;
             });
-    }, [search, options]);
+    }, [value, options]);
 
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             // Check if results exist before calling onChange
-            if (search !== "" && results.length > 0) {
+            if (value !== "" && results.length > 0) {
                 onChange(results[0])    
-                setSearch("")
                 setShowDropDown(false)
             }
         }
     };
 
     return (
-        <div className="flex flex-col items-center space-y-2">
+        <div className="flex flex-col items-center space-y-2 h-full">
             {boxLabel}
             <input
                 type="text"
                 placeholder={placeholder}
-                value={search}
+                value={value}
                 onChange={(e) => {
-                    setSearch(e.target.value);
+                    onChange(e.target.value);
                     if (!showDropDown) setShowDropDown(true);
                 }}
                 onKeyDown={handleKeyDown}
                 onClick={() => {
                     setShowDropDown((prev) => !prev);
-                    setSearch("");
+                    onChange("");
                 }}
                 className="pt-4 cursor-pointer text-white text-l pl-8 pr-8 p-4 flex-col items-start flex justify-center w-60 bg-gray-700 rounded-full focus-within:outline-auto relative"
             />
@@ -71,7 +72,7 @@ const DropdownSearch: React.FC<DropdownSearchProps> = ({
                         results.map((option) => (
                             <div key={option} className="mb-2 last:mb-0">
                                 <label 
-                                    className="text-white cursor-pointer hover:text-blue-400"
+                                    className="text-white cursor-pointer w-full hover:text-blue-400"
                                     onClick={() => {
                                         onChange(option);
                                         setShowDropDown(false);
