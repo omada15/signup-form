@@ -50,6 +50,7 @@ const DropdownSearch: React.FC<DropdownSearchProps> = ({
         <div className="flex flex-col items-center space-y-2 h-full">
             {boxLabel}
             <input
+                autoComplete="off"
                 type="text"
                 placeholder={placeholder}
                 value={value}

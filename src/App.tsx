@@ -3,7 +3,7 @@ import { read, write } from "./store"
 
 import DropdownSearch from "./Components/DropdownSearch"
 import BinaryChoice from "./Components/BinaryButton";
-import { log } from "./log";
+import { log, inn, out, nnn } from "./log";
 import RecordedResponse from "./Components/RecordedResponse";
 
 async function makeStudent(name: string, id: string, func: Function) {
@@ -23,7 +23,9 @@ function idToName(data: SchoolData, targetId: string): string | null {
     if (!data?.students || !Array.isArray(data.students)) return null;
     for (const key of data.students) {
         const student = data[key] as StudentEntry | undefined;
-        if (student?.id === targetId) return student.name;
+        if (student?.id === targetId) {
+            return student.name;
+        }
     }
     return null;
 }
@@ -60,8 +62,8 @@ function Card({ children, title, subtitle }: { children: React.ReactNode, title?
 }
 
 function App() {
-    if (!localStorage.getItem("data")) {
-        localStorage.setItem("data", JSON.stringify({ "students": [] }));
+    if (!(localStorage.getItem("data"))) {
+        localStorage.setItem("data", JSON.stringify({ "students": [], }));
     }
 
     const [name, setName] = useState<string>("")
@@ -72,7 +74,6 @@ function App() {
     const [diddy, setDiddy] = useState<boolean>(true)
     const [password, setPassword] = useState<boolean>(true)
     const [studentid, setStudentid] = useState<string>("")
-    const [floyd, setFloyd] = useState<string>("")
 
     let content = null
 
@@ -80,25 +81,27 @@ function App() {
         if (!read("students").includes(name)) {
             alert("ur name's wrong bro");
         } else {
-            log("SIGN", `USER ${name} signed in with name`);
+            log("INFO", `USER ${name} signed in with name`);
+            if (diddy) {
+                inn(name)
+            } else {
+                out(name)
+            }
         }
     }
 
-    const swithstudentid = (studentid: string) => {
-        // this is added to see if the recorded response was working or not, eventually probably incorporated into the other method 
-        if (diddy) {
-            console.log(studentid + " signed in")
-        }
-        else {
-            console.log(studentid + " signed out")
-        }
-    }
 
     const s = () => {
+        console.log(id)
         if (id) {
             const foundName = idToName(read(""), id);
             if (foundName) {
-                log("SIGN", `USER ${foundName} signed in with id`)
+                log("INFO", `USER ${name} signed in with name`);
+                if (diddy) {
+                    inn(name)
+                } else {
+                    out(name)
+                }
             } else {
                 swithname()
             }
@@ -144,7 +147,7 @@ function App() {
                         options={[]}
                         placeholder="student id"
                         value={studentid}
-                        onEnter={swithstudentid}
+                        onEnter={s}
                         onChange={setStudentid}
                     />
 
