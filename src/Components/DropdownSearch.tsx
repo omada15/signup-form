@@ -17,7 +17,6 @@ const DropdownSearch: React.FC<DropdownSearchProps> = ({
     value,
     onChange,
 }) => {
-    const [search, setSearch] = useState<string>("");
     const [showDropDown, setShowDropDown] = useState<boolean>(false);
 
     let boxLabel = null;
