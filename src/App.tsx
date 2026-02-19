@@ -143,7 +143,7 @@ function App() {
                     onChange={(e) => {
                         if (
                             e.target.value ===
-                            import.meta.env.VITE_SAMS_TIPTOUCHERY_PASSWORD
+                            import.meta.env.VITE_PW
                         )
                             setPassword(false);
                     }}

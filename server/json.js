@@ -2,7 +2,7 @@ import fs from "fs";
 
 export function readMain() {
     try {
-        const jsonString =  fs.readFileSync("./server/data.json", "utf8");
+        const jsonString =  fs.readFileSync("data.json", "utf8");
         const data = JSON.parse(jsonString);
         return data;
     } catch (error) {
@@ -12,5 +12,5 @@ export function readMain() {
 }
 
 export function updateMain(json) {
-    fs.writeFileSync("./server/data.json", JSON.stringify(json, null, 2));
+    fs.writeFileSync("data.json", JSON.stringify(json, null, 2));
 }
