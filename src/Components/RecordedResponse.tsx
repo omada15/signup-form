@@ -1,4 +1,3 @@
-import React, { useState, useMemo } from "react";
 import { type KeyboardEvent } from "react"; 
 
 interface RecordedResponseSearchProps {
@@ -17,9 +16,6 @@ const RecordedResponse: React.FC<RecordedResponseSearchProps> = ({
     onChange,
     onEnter,
 }) => {
-    const [id, setid] = useState<string>("")
-    const [entered, setEntered] = useState<boolean>(false)
-
     let boxLabel = null;
     if (label != null) {
         boxLabel = (
@@ -29,7 +25,6 @@ const RecordedResponse: React.FC<RecordedResponseSearchProps> = ({
 
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
-            setEntered(true)
             onChange("")
             onEnter(value);
         }
