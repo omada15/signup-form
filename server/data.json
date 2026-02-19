@@ -1,8 +1,14 @@
 {
   "daniel": {
     "id": "daniel",
-    "totalMinutes": 0.63,
+    "totalMinutes": 0.82,
     "in": false,
-    "startTime": 29525691.37
+    "startTime": 29525703.06
+  },
+  "maxim blue": {
+    "id": "maxim blue",
+    "totalMinutes": 0,
+    "in": false,
+    "startTime": 0
   }
 }
