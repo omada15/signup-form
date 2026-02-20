@@ -1,5 +1,5 @@
-const link = "https://signup-form-mango.vercel.app";
-//const link = "http://localhost:3001"
+//const link = "https://signup-form-mango.vercel.app";
+const link = "http://localhost:3001"
 export async function log(level: string, message: string) {
     try {
         await fetch(`${link}/log`, {

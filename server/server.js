@@ -7,9 +7,13 @@ import { readMain, updateMain } from "./json.js";
 const app = express();
 const PORT = 3001;
 
-app.use(cors({
-    origin: ["https://signin3464.vercel.app", "http://localhost:3001"]
-}));
+app.use(
+    cors({
+        origin: ["https://signin3464.vercel.app", "http://localhost:5173"],
+        methods: ["POST"],
+        allowedHeaders: ["Content-Type", "Authorization"],
+    }),
+);
 
 app.use(express.json());
 
