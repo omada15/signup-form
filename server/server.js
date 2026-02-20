@@ -43,7 +43,7 @@ const logFile = path.join(logsDir, "app.log");
 
 router.post("/log", (req, res) => {
     const { level = "INFO", message } = req.body;
-    logg(level, message);
+    console.log(level, message);
 });
 
 router.post("/in", async (req, res) => {
@@ -60,7 +60,7 @@ router.post("/in", async (req, res) => {
         res.json({ error: "you dont exist" });
     }
     updateMain(data);
-    logg("INFO", `SIGN IN USER ${name}`);
+    console.log("INFO", `SIGN IN USER ${name}`);
 });
 
 router.post("/new", async (req, res) => {
@@ -101,7 +101,7 @@ router.post("/out", (req, res) => {
         }
     }
     updateMain(data);
-    logg("INFO", `SIGN OUT USER ${name}`);
+    console.log("INFO", `SIGN OUT USER ${name}`);
 });
 
 app.use(router);
