@@ -7,11 +7,7 @@ import { readMain, updateMain } from "./json.js";
 const app = express();
 const PORT = 3001;
 
-app.use(
-    cors({
-        origin: "http://localhost:5173",
-    }),
-);
+app.use(cors());
 
 app.use(express.json());
 
@@ -41,7 +37,7 @@ const logFile = path.join(logsDir, "app.log");
 
 router.post("/log", (req, res) => {
     const { level = "INFO", message } = req.body;
-    logg(level, message)
+    logg(level, message);
 });
 
 router.post("/in", async (req, res) => {
@@ -99,7 +95,7 @@ router.post("/out", (req, res) => {
         }
     }
     updateMain(data);
-    logg("INFO", `SIGN OUT USER ${name}`)
+    logg("INFO", `SIGN OUT USER ${name}`);
 });
 
 app.use(router);

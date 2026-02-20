@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { read, write } from "./store"
-import data from "./students.json";
 
 import DropdownSearch from "./Components/DropdownSearch";
 import BinaryChoice from "./Components/BinaryButton";
@@ -98,56 +97,24 @@ function App() {
     const [page, setpage] = useState(0);
     const [changeName, setChangeName] = useState<string>("");
     const [changeid, setChangeid] = useState<string>("");
-    const [diddy, setDiddy] = useState<boolean>(true)
+    const [State, setState] = useState<boolean>(true)
     const [password, setPassword] = useState<boolean>(true)
-    const [studentid, setStudentid] = useState<string>("")
     const [samsname, setSamsname] = useState<string>("")
 
     let content = null;
 
     const swithname = () => {
-        if (["Liam", "Olivia", "Noah", "Emma", "Oliver", "Charlotte", "James", "Amelia", "Elijah", "Sophia",
-  "William", "Harper", "Henry", "Evelyn", "Lucas", "Abigail", "Benjamin", "Mia", "Theodore", "Avery",
-  "Mateo", "Scarlett", "Levi", "Sofia", "Sebastian", "Chloe", "Daniel", "Camila", "Jack", "Layla",
-  "Wyatt", "Grace", "Owen", "Isabella", "Arlo", "Luna", "Leo", "Maya", "Julian", "Zoe",
-  "Hudson", "Lily", "Grayson", "Elena", "Ezra", "Rila", "Asher", "Eliana", "Carter", "Willow",
-  "Ethan", "Ivy", "Isaac", "Emilia", "Gabriel", "Violet", "Lincoln", "Phoebe", "Mason", "Gianna",
-  "Silas", "Cora", "Miles", "Delilah", "Rowan", "Alice", "Declan", "Ruby", "Gael", "Jade",
-  "Xavier", "Eva", "Caleb", "Hazel", "Thomas", "Adeline", "Brooks", "Nora", "Everett", "Aria",
-  "Jasper", "Iris", "Bennett", "Aurora", "Arthur", "Quinn", "Parker", "Clara", "Kai", "Sienna",
-  "Ryder", "Juniper", "Archer", "Genevieve", "Sawyer", "Mabel", "Luka", "Freya", "Finn", "Sloane",
-  "August", "Elise", "Silas", "Valerie", "Roman", "Noelle", "Zion", "Daisy", "Milo", "June",
-  "Atlas", "Harlow", "Enzo", "Fiona", "Felix", "Lila", "Theo", "Callie", "Hugo", "Piper",
-  "Jude", "Giselle", "Axel", "Thea", "Atticus", "Maeve", "Otto", "Rosalie", "Bodhi", "Vera",
-  "River", "Adelaide", "Oscar", "Cecilia", "Otis", "Evie", "Cassius", "Lydia", "Remy", "Selena",
-  "Caspian", "Penelope", "Leon", "Magnolia", "Soren", "Esther", "Dante", "Nadia", "Kian", "Blaire",
-  "Zane", "Lottie", "Nash", "Mila", "Nico", "Leona", "Rory", "Cleo", "Wilder", "Etta",
-  "Bowen", "Tessa", "Stellan", "Maren", "Apollo", "Sylvie", "Knox", "Daphne", "Rhys", "Hallie",
-  "Koda", "Zelda", "Beckett", "Willa", "Hayes", "Alma", "Orion", "Lyra", "Callum", "Briar",
-  "Killian", "Flora", "Sullivan", "Colette", "Gully", "Miriam", "Lennox", "Astrid", "Murphy", "Odessa",
-  "Fisher", "Opal", "Wells", "Imogen", "Shepherd", "Zinnia", "Foster", "Pearl", "Crosby", "Edith"].includes(name)) {
+        if (read("students").includes(name)) {
             alert("ur name's wrong bro");
         } else {
             log("INFO", `USER ${name} signed in with name`);
-            if (diddy) {
+            if (State) {
                 inn(name);
             } else {
                 out(name);
             }
+            setSamsname(name)
         }
-
-    const swithstudentid = (studentid: string) => {
-        // this is added to see if the recorded response was working or not, eventually probably incorporated into the other method 
-        if (diddy) {
-            console.log(studentid + " signed in")
-            setSamsname(studentid + " signed in")
-        }
-        else {
-            console.log(studentid + " signed out")
-            setSamsname(studentid + " signed out")
-        }
-
-        
     }
 
     const s = () => {
@@ -156,7 +123,7 @@ function App() {
             const foundName = idToName(read(""), id);
             if (foundName) {
                 log("INFO", `USER ${name} signed in with name`);
-                if (diddy) {
+                if (State) {
                     inn(name);
                 } else {
                     out(name);
@@ -192,32 +159,13 @@ function App() {
             <Card
                 title="Attendance"
                 subtitle={
-                    diddy ? "Signing students in" : "Signing students out"
+                    State ? "Signing students in" : "Signing students out"
                 }
             >
                 <div className="flex flex-col gap-4">
                     <DropdownSearch
                         label=""
-                        options={["Liam", "Olivia", "Noah", "Emma", "Oliver", "Charlotte", "James", "Amelia", "Elijah", "Sophia",
-  "William", "Harper", "Henry", "Evelyn", "Lucas", "Abigail", "Benjamin", "Mia", "Theodore", "Avery",
-  "Mateo", "Scarlett", "Levi", "Sofia", "Sebastian", "Chloe", "Daniel", "Camila", "Jack", "Layla",
-  "Wyatt", "Grace", "Owen", "Isabella", "Arlo", "Luna", "Leo", "Maya", "Julian", "Zoe",
-  "Hudson", "Lily", "Grayson", "Elena", "Ezra", "Rila", "Asher", "Eliana", "Carter", "Willow",
-  "Ethan", "Ivy", "Isaac", "Emilia", "Gabriel", "Violet", "Lincoln", "Phoebe", "Mason", "Gianna",
-  "Silas", "Cora", "Miles", "Delilah", "Rowan", "Alice", "Declan", "Ruby", "Gael", "Jade",
-  "Xavier", "Eva", "Caleb", "Hazel", "Thomas", "Adeline", "Brooks", "Nora", "Everett", "Aria",
-  "Jasper", "Iris", "Bennett", "Aurora", "Arthur", "Quinn", "Parker", "Clara", "Kai", "Sienna",
-  "Ryder", "Juniper", "Archer", "Genevieve", "Sawyer", "Mabel", "Luka", "Freya", "Finn", "Sloane",
-  "August", "Elise", "Silas", "Valerie", "Roman", "Noelle", "Zion", "Daisy", "Milo", "June",
-  "Atlas", "Harlow", "Enzo", "Fiona", "Felix", "Lila", "Theo", "Callie", "Hugo", "Piper",
-  "Jude", "Giselle", "Axel", "Thea", "Atticus", "Maeve", "Otto", "Rosalie", "Bodhi", "Vera",
-  "River", "Adelaide", "Oscar", "Cecilia", "Otis", "Evie", "Cassius", "Lydia", "Remy", "Selena",
-  "Caspian", "Penelope", "Leon", "Magnolia", "Soren", "Esther", "Dante", "Nadia", "Kian", "Blaire",
-  "Zane", "Lottie", "Nash", "Mila", "Nico", "Leona", "Rory", "Cleo", "Wilder", "Etta",
-  "Bowen", "Tessa", "Stellan", "Maren", "Apollo", "Sylvie", "Knox", "Daphne", "Rhys", "Hallie",
-  "Koda", "Zelda", "Beckett", "Willa", "Hayes", "Alma", "Orion", "Lyra", "Callum", "Briar",
-  "Killian", "Flora", "Sullivan", "Colette", "Gully", "Miriam", "Lennox", "Astrid", "Murphy", "Odessa",
-  "Fisher", "Opal", "Wells", "Imogen", "Shepherd", "Zinnia", "Foster", "Pearl", "Crosby", "Edith"]}
+                        options={read("students")}
                         placeholder="Search by name..."
                         onChange={setName}
                         value={name}
@@ -226,41 +174,24 @@ function App() {
                     <BinaryChoice
                         label=""
                         options={["Sign in", "Sign out"]}
-                        value={diddy}
-                        onChange={setDiddy}
+                        value={State}
+                        onChange={setState}
                     />
 
                     <RecordedResponse
                         label="Scan your student id"
                         options={[]}
                         placeholder="student id"
-                        value={studentid}
+                        value={id}
                         onEnter={s}
-                        onChange={setStudentid}
+                        onChange={setid}
                     />
 
                     <button className={btnPrimary} onClick={s}>Submit</button>
                     <button className={btnSecondary} onClick={() => setpage(1)}>Register / Update</button>
 
-                    <h1>Sammieee Stroke</h1>
                     {samsname && <h2>{samsname}!</h2>}
-                    <div className="border-t border-white/10 pt-4">
-                        <p className="text-xs text-white/30 mb-2 uppercase tracking-widest">
-                            Or scan student ID
-                        </p>
-                        <input
-                            onChange={(e) => setid(e.target.value)}
-                            placeholder="Student ID"
-                            className={inputClass}
-                        />
-                    </div>
 
-                    <button className={btnPrimary} onClick={s}>
-                        Submit
-                    </button>
-                    <button className={btnSecondary} onClick={() => setpage(1)}>
-                        Register / Update
-                    </button>
                 </div>
             </Card>
         );
@@ -299,7 +230,6 @@ function App() {
             {content}
         </div>
     );
-}
 }
 
 export default App;
