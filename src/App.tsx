@@ -118,15 +118,15 @@ function App() {
     }
 
     const s = () => {
-        console.log(id);
+        console.log(idToName(read(""), id));
         if (id) {
             const foundName = idToName(read(""), id);
             if (foundName) {
-                log("INFO", `USER ${name} signed in with name`);
+                log("INFO", `USER ${foundName} signed in with name`);
                 if (State) {
-                    inn(name);
+                    inn(foundName);
                 } else {
-                    out(name);
+                    out(foundName);
                 }
             } else {
                 swithname();
