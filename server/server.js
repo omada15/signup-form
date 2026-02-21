@@ -38,34 +38,23 @@ async function write(path, data) {
 const app = express();
 const PORT = 3001;
 
-// 1. Explicitly define allowed origins
-const allowedOrigins = [
-    "https://signin3464.vercel.app",
-    "http://localhost:5173",
-];
+// 1. Manual Handshake (Put this BEFORE Firebase init if possible)
+app.use((req, res, next) => {
+    const allowed = ["https://signin3464.vercel.app", "http://localhost:5173"];
+    if (allowed.includes(req.headers.origin)) {
+        res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
+    }
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.setHeader(
+        "Access-Control-Allow-Headers",
+        "Content-Type, Authorization",
+    );
 
-app.use(
-    cors({
-        origin: (origin, callback) => {
-            // Allow requests with no origin (like mobile apps or curl)
-            if (!origin || allowedOrigins.includes(origin)) {
-                callback(null, true);
-            } else {
-                callback(new Error("Not allowed by CORS"));
-            }
-        },
-        methods: ["GET", "POST", "OPTIONS"],
-        allowedHeaders: ["Content-Type", "Authorization"],
-        credentials: true,
-    }),
-);
-
-// 2. IMPORTANT: Manually handle the OPTIONS preflight globally
-app.options("*", (req, res) => {
-    res.set("Access-Control-Allow-Origin", req.headers.origin);
-    res.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    res.sendStatus(204);
+    // IMMEDIATELY return 200 for preflight
+    if (req.method === "OPTIONS") {
+        return res.status(200).end();
+    }
+    next();
 });
 
 app.use(express.json());
@@ -89,19 +78,20 @@ router.post("/in", async (req, res) => {
                 data[name].startTime = parseFloat(
                     (Date.now() / 60000).toFixed(2),
                 );
-                await write("root", data);
-                console.log(`SIGN IN USER ${name}`);
+
+                await write("root", data); // Wait for write to finish
+
+                // You MUST send a response!
                 return res
                     .status(200)
-                    .json({ message: "Signed in", user: data[name] });
-            } else {
-                return res.status(400).json({ error: "Already signed in" });
+                    .json({ success: true, user: data[name] });
             }
-        } else {
-            return res.status(404).json({ error: "User does not exist" });
+            return res.status(400).json({ error: "Already signed in" });
         }
+        return res.status(404).json({ error: "User not found" });
     } catch (err) {
-        res.status(500).json({ error: "Server error" });
+        console.error(err);
+        return res.status(500).json({ error: "Database error" });
     }
 });
 
