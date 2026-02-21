@@ -128,6 +128,7 @@ function App() {
                 } else {
                     out(foundName);
                 }
+                setSamsname(foundName)
             } else {
                 swithname();
             }
