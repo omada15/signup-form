@@ -93,7 +93,7 @@ router.post("/in", async (req, res) => {
         console.error(err);
         return res.status(500).json({ error: "Database error" });
     }
-});
+}); // thank you sundar pichai
 
 router.post("/new", async (req, res) => {
     const name = req.body.id;
