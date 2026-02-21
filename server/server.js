@@ -38,17 +38,38 @@ async function write(path, data) {
 const app = express();
 const PORT = 3001;
 
-// --- FIX 1: EXPANDED CORS CONFIG ---
-const corsOptions = {
-    origin: ["https://signin3464.vercel.app", "http://localhost:5173"],
-    methods: ["GET", "POST", "OPTIONS"], // OPTIONS is required for preflight
-    allowedHeaders: ["Content-Type", "Authorization"],
-};
+// 1. Explicitly define allowed origins
+const allowedOrigins = [
+    "https://signin3464.vercel.app",
+    "http://localhost:5173",
+];
 
-app.use(cors(corsOptions));
-app.options("*", cors(corsOptions)); // Handle preflight globally
+app.use(
+    cors({
+        origin: (origin, callback) => {
+            // Allow requests with no origin (like mobile apps or curl)
+            if (!origin || allowedOrigins.includes(origin)) {
+                callback(null, true);
+            } else {
+                callback(new Error("Not allowed by CORS"));
+            }
+        },
+        methods: ["GET", "POST", "OPTIONS"],
+        allowedHeaders: ["Content-Type", "Authorization"],
+        credentials: true,
+    }),
+);
+
+// 2. IMPORTANT: Manually handle the OPTIONS preflight globally
+app.options("*", (req, res) => {
+    res.set("Access-Control-Allow-Origin", req.headers.origin);
+    res.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.sendStatus(204);
+});
 
 app.use(express.json());
+// ... rest of your router and firebase code
 
 let router = express.Router();
 
