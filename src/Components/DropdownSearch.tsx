@@ -70,7 +70,7 @@ const DropdownSearch: React.FC<DropdownSearchProps> = ({
                 <div className="bg-gray-700 p-4 border-gray-200 w-60 rounded-xl mt-1 overflow-hidden">
                     {results.length > 0 ? (
                         results.map((option) => (
-                            <div key={option} className="mb-2 last:mb-0">
+                            <div key={option} className="mb-2 last:mb-0 flex flex-fill">
                                 <label 
                                     className="text-white cursor-pointer w-full hover:text-blue-400"
                                     onClick={() => {
