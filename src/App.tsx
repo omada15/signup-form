@@ -100,20 +100,23 @@ function App() {
     const [State, setState] = useState<boolean>(true)
     const [password, setPassword] = useState<boolean>(true)
     const [samsname, setSamsname] = useState<string>("")
+    const [samsfih, setSamsfih] = useState<string>("")
 
     let content = null;
 
     const swithname = () => {
         if (read("students").includes(name)) {
-            alert("ur name's wrong bro");
-        } else {
             log("INFO", `USER ${name} signed in with name`);
             if (State) {
                 inn(name);
+                setSamsfih(" signed in")
             } else {
                 out(name);
+                setSamsfih(" signed out")
             }
-            setSamsname(name)
+            setSamsname(name)  
+        } else {
+            alert("ur name's wrong bro");
         }
     }
 
@@ -125,8 +128,10 @@ function App() {
                 log("INFO", `USER ${foundName} signed in with name`);
                 if (State) {
                     inn(foundName);
+                    setSamsfih(" signed in")
                 } else {
                     out(foundName);
+                    setSamsfih(" signed out")
                 }
                 setSamsname(foundName)
             } else {
@@ -190,8 +195,8 @@ function App() {
 
                     <button className={btnPrimary} onClick={s}>Submit</button>
                     <button className={btnSecondary} onClick={() => setpage(1)}>Register / Update</button>
-
-                    {samsname && <h2>{samsname}!</h2>}
+        
+                {samsname && <h2>{samsname}{samsfih}</h2>}
 
                 </div>
             </Card>
