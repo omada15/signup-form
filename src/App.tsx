@@ -116,7 +116,12 @@ function App() {
             }
             setSamsname(name)  
         } else {
-            alert("ur name's wrong bro");
+            if (State) {
+                setSamsfih("failed to sign in (id wrong)")
+            }
+            else {
+                setSamsfih("failed to sign out (id wrong)")
+            }
         }
     }
 
@@ -136,9 +141,23 @@ function App() {
                 setSamsname(foundName)
             } else {
                 swithname();
+                if (State) {
+                    setSamsfih("failed to sign in (id wrong)")
+                }
+                else {
+                    setSamsfih("failed to sign out (id wrong)")
+                }
+                setSamsname(" ")
             }
         } else {
             swithname();
+            if (State) {
+                setSamsfih("failed to sign in (id wrong)")
+            }
+            else {
+                setSamsfih("failed to sign out (id wrong)")
+            }
+            setSamsname(" ")
         }
     };
 
